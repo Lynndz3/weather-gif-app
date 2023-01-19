@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <script src="app.js" defer></script>
+    <title>Moody Weather</title>
+</head>
+<body>
+  <div class="container container-fluid">
+   <div class="row">
+    <h1 class="title">Mood Weather</h1>
+   </div>
+   <div class="row">
+    <p class="subheader">The weather for your brain&#46;&nbsp;A GIF for your mood.</p>
+   </div>
+   <div class="row search-row">
+    <form>
+        <div class="form-group">
+        <label for="location" style="font-weight: 700">City Name (excluding State) or Zip Code</label>
+        <input type="text" id="location" name="location" placeholder="'Denver' or '80209'" class="form-control">
+        <button class='btn btn-primary' type="button" id="locationSearch">Search</button>
+        </div>
+    </form>
+   </div>
+   <div class="row weather-row">
+    <div class="image col">
+    <img id="moodImage" src="">
+    <p id='imgText'></p>
+    </div>
+    <div class="main-weather-display info col">
+        <div class="general-info row">
+          <p id="weatherDescription"></p>
+          <h1 id="locationText"></h1>
+        </div>
+        <div class="row">
+            <div class="col order-1">
+                <span class="degrees"></span>
+                </div>
+            <div class="weather-details info col order-2">
+                <p id="feels-like"></p>
+                <p id="wind"></p>
+                <p id="humidity"></p>
+                </div>
+        </div>
+      </div>
+  </div>   
+
+  </div>
+</body>
+</html>
+

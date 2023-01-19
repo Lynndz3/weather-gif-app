@@ -1,0 +1,112 @@
+:root {
+    --purple: #d019dc;
+}
+
+body {
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+.container {
+    padding-top: calc(var(--bs-gutter-x) * 2);
+}
+
+#moodImage {
+    width: 500px;
+}
+
+.weather-details {
+    display: flex;
+    flex-direction: column;
+    font-size: 1.5rem;
+    font-weight: 900;
+    letter-spacing: 0.1rem;
+    height: 10rem;
+    padding-left: 1rem;
+    justify-content: space-between;
+}
+
+.degrees {
+    font-size: 10rem;
+    font-weight: 900;
+    font-family: 'Nunito', sans-serif;
+    display: flex;
+    color: var(--purple);
+    justify-content: center
+    ;
+}
+
+.degrees::after {
+    content: '\00B0 F';
+    font-size: 3rem;
+    padding-top: 75px;
+    color: var(--purple);
+}
+
+.row {
+    align-items: center;
+}
+
+.weather-row {
+    margin-top: 5%;
+
+}
+
+.search-row {
+   display: flex;
+   flex-wrap: nowrap; 
+   justify-content: center;
+   margin-top: 3%;
+}
+
+#location {
+    width: 25%;
+    min-width: 150px !important;
+}
+
+#locationSearch {
+    width: 15%;
+    min-width: 80px !important;
+    text-align: center;
+}
+
+#locationText {
+    font-weight: 700;
+}
+
+.title {
+    text-align: center;
+    font-size: 4rem;
+    margin-bottom: 2%;
+    color: var(--purple);
+    font-weight: 800;
+}
+
+.subheader {
+    font-size: 2rem;
+    text-align: center;
+}
+
+.form-control {
+    border: var(--bs-border-width) solid var(--purple);
+    margin-top: 1%;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.btn {
+    margin-top: 2%;
+}
+
+#weatherDescription {
+    margin-bottom: 0.5rem;
+    font-size: 1.5rem;
+    color: var(--purple);
+}
+
+.main-weather-display {
+    text-align: center;
+}
