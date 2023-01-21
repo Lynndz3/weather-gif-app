@@ -59,7 +59,7 @@ window.addEventListener('keypress', function(e) {
 
 window.addEventListener('load', function() {
     loadingButton();
-    let locationAPIcall = `http://api.openweathermap.org/geo/1.0/direct?q=Denver&appid=${WEATHER_API_KEY}`;
+    let locationAPIcall = `https://api.openweathermap.org/geo/1.0/direct?q=Denver&appid=${WEATHER_API_KEY}`;
     (async function () {
         const [weatherData, locationData, weatherError] = await getWeather(locationAPIcall);
         if (!weatherData) {
@@ -90,10 +90,10 @@ function determineWeatherAPICall() {
     let locationAPIcall = '';
     //if search is a zip code (begins with a number), call the zip api
     if (/^\d/.test(searchText)) {
-        locationAPIcall = `http://api.openweathermap.org/geo/1.0/zip?zip=${searchText}&appid=${WEATHER_API_KEY}`
+        locationAPIcall = `https://api.openweathermap.org/geo/1.0/zip?zip=${searchText}&appid=${WEATHER_API_KEY}`
     }
     //otherwise call the location api
-    else locationAPIcall = `http://api.openweathermap.org/geo/1.0/direct?q=${searchText}&limit=5&appid=${WEATHER_API_KEY}`;
+    else locationAPIcall = `https://api.openweathermap.org/geo/1.0/direct?q=${searchText}&limit=5&appid=${WEATHER_API_KEY}`;
     return locationAPIcall;
 }
 
