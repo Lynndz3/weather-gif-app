@@ -12,30 +12,53 @@ let weatherDescription = document.querySelector('#weatherDescription');
 let locationText = document.querySelector('#locationText');
 
 locationSearch.addEventListener('click', function() {
-    let searchText = document.querySelector('#location').value;
-    let locationAPIcall = '';
-    //if search is a zip code (begins with a number), call the zip api
-    if (/^\d/.test(searchText)) {
-        locationAPIcall = `http://api.openweathermap.org/geo/1.0/zip?zip=${searchText}&appid=${WEATHER_API_KEY}`
+    loadingButton();
+    if (validate() == true) {
+        let locationAPIcall = determineWeatherAPICall();
+        (async function () {
+            const [weatherData, locationData, weatherError] = await getWeather(locationAPIcall);
+            if (!weatherData) {
+                moodImg.src = weatherError;
+            }
+            let gifSearch = setGiphySearchTerm(weatherData.weather[0].main);
+            const [gifData, gifError] = await getGif(gifSearch);
+            //render gif
+            moodImg.src = (!gifData) ? gifError : gifData;
+            imgText.textContent = `Randomized search for "${gifSearch}" from giphy.com`;
+            //render all other data
+            renderData(weatherData, locationData);
+            normalButton();
+        })();
     }
-    //otherwise call the location api
-    else locationAPIcall = `http://api.openweathermap.org/geo/1.0/direct?q=${searchText}&limit=5&appid=${WEATHER_API_KEY}`;
-    (async function () {
-        const [weatherData, locationData, weatherError] = await getWeather(locationAPIcall);
-        if (!weatherData) {
-            moodImg.src = weatherError;
-        }
-        let gifSearch = setGiphySearchTerm(weatherData.weather[0].main);
-        const [gifData, gifError] = await getGif(gifSearch);
-        //render gif
-        moodImg.src = (!gifData) ? gifError : gifData;
-        imgText.textContent = `Randomized search for "${gifSearch}" from giphy.com`;
-        //render all other data
-        renderData(weatherData, locationData);
-    })();
+});
+
+window.addEventListener('keypress', function(e) {
+    if(e.keyCode == 13) {
+        e.preventDefault();
+        if (validate() == true) {
+            loadingButton();
+            console.log("enter was pressed");
+            let locationAPIcall = determineWeatherAPICall();
+            (async function () {
+                const [weatherData, locationData, weatherError] = await getWeather(locationAPIcall);
+                if (!weatherData) {
+                    moodImg.src = weatherError;
+                }
+                let gifSearch = setGiphySearchTerm(weatherData.weather[0].main);
+                const [gifData, gifError] = await getGif(gifSearch);
+                //render gif
+                moodImg.src = (!gifData) ? gifError : gifData;
+                imgText.textContent = `Randomized search for "${gifSearch}" from giphy.com`;
+                //render all other data
+                renderData(weatherData, locationData);
+                normalButton();
+        })();
+    }
+    }
 });
 
 window.addEventListener('load', function() {
+    loadingButton();
     let locationAPIcall = `http://api.openweathermap.org/geo/1.0/direct?q=Denver&appid=${WEATHER_API_KEY}`;
     (async function () {
         const [weatherData, locationData, weatherError] = await getWeather(locationAPIcall);
@@ -49,6 +72,7 @@ window.addEventListener('load', function() {
         imgText.textContent = `Randomized search for "${gifSearch}" from giphy.com`;
         //render all other data
         renderData(weatherData, locationData);
+        normalButton();
     })();
 })
 
@@ -59,6 +83,18 @@ function renderData(weatherData, locationData) {
     humidity.textContent = `Humidity: ${Math.round(weatherData.main.humidity)}%`;
     weatherDescription.textContent = weatherData.weather[0].description.toUpperCase();
     locationText.textContent = locationData.state ? `${locationData.name}, ${locationData.state}` : `${locationData.name} - ${locationData.zip}`;
+}
+
+function determineWeatherAPICall() {
+    let searchText = document.querySelector('#location').value;
+    let locationAPIcall = '';
+    //if search is a zip code (begins with a number), call the zip api
+    if (/^\d/.test(searchText)) {
+        locationAPIcall = `http://api.openweathermap.org/geo/1.0/zip?zip=${searchText}&appid=${WEATHER_API_KEY}`
+    }
+    //otherwise call the location api
+    else locationAPIcall = `http://api.openweathermap.org/geo/1.0/direct?q=${searchText}&limit=5&appid=${WEATHER_API_KEY}`;
+    return locationAPIcall;
 }
 
 async function getWeather(locationAPIcall) {
@@ -122,3 +158,35 @@ function setGiphySearchTerm(weatherData) {
     console.log("search term is " + search);
     return search;
 }
+
+let buttonSpinner = document.querySelector('.loadingSpinner');
+
+function loadingButton() {
+   locationSearch.disabled = true;
+   locationSearch.textContent = 'Loading...';
+   buttonSpinner.classList.add('spinner-border', 'spinner-border-sm');
+   buttonSpinner.role = 'status';
+   buttonSpinner.ariaHidden = 'true'; 
+}
+
+function normalButton() {
+    buttonSpinner.classList.remove('spinner-border', 'spinner-border-sm');
+    buttonSpinner.role = 'status';
+    buttonSpinner.ariaHidden = 'true';  
+    locationSearch.disabled = false;
+    locationSearch.textContent = 'Search';
+}
+
+function validate() {
+    let searchText = document.querySelector('#location').value;
+    let warningText = document.querySelector('.validation');
+    if (!searchText || searchText.length < 3) {
+        warningText.textContent = "Please enter valid city or zip";
+        return false;
+    }
+    else {
+        warningText.textContent = '';
+        return true;
+    }
+}
+

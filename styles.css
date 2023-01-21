@@ -1,5 +1,5 @@
 :root {
-    --purple: #d019dc;
+    --highlight: #f6a61d;
 }
 
 body {
@@ -30,7 +30,7 @@ body {
     font-weight: 900;
     font-family: 'Nunito', sans-serif;
     display: flex;
-    color: var(--purple);
+    color: var(--highlight);
     justify-content: center
     ;
 }
@@ -39,7 +39,7 @@ body {
     content: '\00B0 F';
     font-size: 3rem;
     padding-top: 75px;
-    color: var(--purple);
+    color: var(--highlight);
 }
 
 .row {
@@ -77,7 +77,7 @@ body {
     text-align: center;
     font-size: 4rem;
     margin-bottom: 2%;
-    color: var(--purple);
+    color: var(--highlight);
     font-weight: 800;
 }
 
@@ -87,7 +87,7 @@ body {
 }
 
 .form-control {
-    border: var(--bs-border-width) solid var(--purple);
+    border: var(--bs-border-width) solid var(--highlight);
     margin-top: 1%;
 }
 
@@ -104,9 +104,13 @@ body {
 #weatherDescription {
     margin-bottom: 0.5rem;
     font-size: 1.5rem;
-    color: var(--purple);
+    color: var(--highlight);
 }
 
 .main-weather-display {
     text-align: center;
+}
+
+small {
+    color: red;
 }
